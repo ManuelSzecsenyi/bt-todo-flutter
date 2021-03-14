@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:to_do/components/navbar/ProfileImage.dart';
 import 'package:to_do/components/navbar/MenuBtn.dart';
+import 'package:to_do/components/navbar/ProfileImage.dart';
 
 class Navbar extends StatelessWidget {
   @override

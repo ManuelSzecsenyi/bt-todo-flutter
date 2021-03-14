@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 
 class Header extends StatelessWidget {
@@ -21,7 +20,7 @@ class Header extends StatelessWidget {
           )
         ),
         Container(
-          margin: EdgeInsets.only(top: 5),
+          margin: EdgeInsets.only(top: 15),
           child: Text(
               "Meine Aufgaben",
               style: GoogleFonts.roboto(
