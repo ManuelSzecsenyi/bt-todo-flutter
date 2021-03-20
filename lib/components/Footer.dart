@@ -26,7 +26,6 @@ class _FooterState extends State<Footer> {
               padding: EdgeInsets.only(left: 15),
               child: Image(image: AssetImage("assets/save-btn.png"))
             )
-
           ],)
         ),
       ),

@@ -22,7 +22,7 @@ class _TodoItemState extends State<TodoItem> {
         child: Container(
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
-              color: Colors.red,//HexColor("#F6F6F6"),
+              color: HexColor("#F6F6F6"),
               borderRadius: BorderRadius.circular(5)
           ),
           child: Row(children: [

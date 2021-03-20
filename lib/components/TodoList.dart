@@ -28,9 +28,11 @@ class _TodoListState extends State<TodoList> {
       itemCount: todos.length,
       physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
-        return ListTile(
-          title: TodoItem()
+        return Padding(
+          padding: EdgeInsets.only(bottom: 10),
+          child: TodoItem(),
         );
+
       },
     );
   }
