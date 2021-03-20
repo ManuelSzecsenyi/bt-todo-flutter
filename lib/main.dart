@@ -36,14 +36,16 @@ class MainScreen extends StatelessWidget {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Flexible(child: Navbar()),
+                Navbar(),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                    padding: EdgeInsets.fromLTRB(0, 30, 0, 20),
                     child: Header()
                 ),
-                Flexible(
-                    flex: 2,
+                Expanded(
                     child: TodoList()
+                ),
+                Container(
+                  height: 60, // Because of the Positioned footer
                 )
               ]
           ),

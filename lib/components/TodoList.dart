@@ -26,6 +26,7 @@ class _TodoListState extends State<TodoList> {
 
     return ListView.builder(
       itemCount: todos.length,
+      physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         return ListTile(
           title: TodoItem()
