@@ -24,38 +24,35 @@ class _TodoListState extends State<TodoList> {
 
   @override
   Widget build(BuildContext context) {
-    /**
-     * TODO add here API-service things
-     */
-    final todos = List<Todo>.generate(
-      10,
-          (i) => Todo(
-              id: "1",
-              text: 'Todo $i',
-              done: false,
-              createdAt: new DateTime.now()
-          ),
-        );
-
     return FutureBuilder(
         future: futureTodoList,
         builder: (context, snapshot) {
           if(snapshot.hasData == null){
             return Container();
           }
-          return ListView.builder(
-            itemCount: 5, // TODO check here lenght and pass data
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: TodoItem(),
-              );
-            },
-          );
+          return TodoListView(todoList: snapshot.data as List<Todo>);
         }
     );
   }
 }
 
-//https://flutter.dev/docs/cookbook/navigation/passing-data
+class TodoListView extends StatelessWidget {
+  final List<Todo> todoList;
+
+  TodoListView({required this.todoList});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: todoList.length,
+      physics: BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: 10),
+          child: TodoItem(todoList[index]),
+        );
+      },
+    );
+  }
+}
+
