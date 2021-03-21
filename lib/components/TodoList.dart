@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:to_do/components/TodoItem.dart';
@@ -13,33 +15,30 @@ class TodoList extends StatefulWidget {
 
 class _TodoListState extends State<TodoList> {
 
-  late Future<List<Todo>> futureTodoList;
+  List<Todo> todoList = [];
+  Timer timer = Timer.periodic(Duration(seconds: 1), (Timer t) => { });
 
   @override
   void initState() {
     super.initState();
-    futureTodoList = TodoService.fetchTodos();
+    TodoService.fetchTodos();
+    todoList = TodoService.todoItems;
+    timer = Timer.periodic(Duration(seconds: 4), (Timer t) => checkForNewTodos());
   }
 
+  void checkForNewTodos() {
+    setState(() {
+      TodoService.fetchTodos();
+      todoList = TodoService.todoItems;
+      log("new items fetched");
+    });
+  }
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: futureTodoList,
-        builder: (context, snapshot) {
-          if(snapshot.hasData == null){
-            return Container();
-          }
-          return TodoListView(todoList: snapshot.data as List<Todo>);
-        }
-    );
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
-}
-
-class TodoListView extends StatelessWidget {
-  final List<Todo> todoList;
-
-  TodoListView({required this.todoList});
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +47,21 @@ class TodoListView extends StatelessWidget {
       physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         return Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: TodoItem(todoList[index]),
+            padding: EdgeInsets.only(bottom: 10),
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  todoList[index].done = !todoList[index].done;
+                  TodoService.toggleTodo(todoList[index]);
+                  TodoService.fetchTodos();
+                });
+              },
+              child: TodoItem(todoList[index]),
+            )
         );
       },
     );
   }
 }
+
 

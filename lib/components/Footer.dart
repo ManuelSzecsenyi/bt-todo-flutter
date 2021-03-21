@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:to_do/components/TodoList.dart';
+import 'package:to_do/components/services/TodoService.dart';
 
 class Footer extends StatefulWidget {
   @override
@@ -8,6 +10,9 @@ class Footer extends StatefulWidget {
 }
 
 class _FooterState extends State<Footer> {
+
+  TextEditingController todoTextController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -21,38 +26,36 @@ class _FooterState extends State<Footer> {
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Row(children: [
-            Expanded(child: TodoInput()),
+            Expanded(
+              child: TextField(
+                controller: todoTextController,
+                decoration: InputDecoration(
+                    hintText: "Eine Aufgabe hinzufügen",
+                    hintStyle: GoogleFonts.roboto(fontSize: 17, color: Colors.white60),
+                    border: InputBorder.none
+                ),
+                cursorColor: Colors.white,
+                style: GoogleFonts.roboto(
+                    fontSize: 17,
+                    color: Colors.white,
+                    decoration: TextDecoration.none
+                ),
+              )
+            ),
             Padding(
               padding: EdgeInsets.only(left: 15),
-              child: Image(image: AssetImage("assets/save-btn.png"))
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    TodoService.addTodo(todoTextController.text);
+                    todoTextController.clear();
+                  });
+                },
+               child: Image(image: AssetImage("assets/save-btn.png")),
+              )
             )
           ],)
         ),
-      ),
-    );
-  }
-}
-
-
-class TodoInput extends StatefulWidget {
-  @override
-  _TodoInputState createState() => _TodoInputState();
-}
-
-class _TodoInputState extends State<TodoInput> {
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-          hintText: "Eine Aufgabe hinzufügen",
-          hintStyle: GoogleFonts.roboto(fontSize: 17, color: Colors.white60),
-          border: InputBorder.none
-      ),
-      cursorColor: Colors.white,
-      style: GoogleFonts.roboto(
-          fontSize: 17,
-          color: Colors.white,
-          decoration: TextDecoration.none
       ),
     );
   }
