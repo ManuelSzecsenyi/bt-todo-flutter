@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:to_do/components/TodoList.dart';
 import 'package:to_do/components/services/TodoService.dart';
 
 class Footer extends StatefulWidget {
+
+  final void Function(String) onAdd;
+  const Footer(this.onAdd);
+
   @override
   _FooterState createState() => _FooterState();
 }

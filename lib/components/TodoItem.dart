@@ -8,8 +8,9 @@ import 'package:to_do/models/Todo.dart';
 class TodoItem extends StatefulWidget {
 
   final Todo todo;
-
   const TodoItem(this.todo);
+
+
 
   @override
   _TodoItemState createState() => _TodoItemState();
