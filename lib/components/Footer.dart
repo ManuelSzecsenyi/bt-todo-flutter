@@ -50,7 +50,7 @@ class _FooterState extends State<Footer> {
               child: InkWell(
                 onTap: () {
                   setState(() {
-                    TodoService.addTodo(todoTextController.text);
+                    widget.onAdd(todoTextController.text);
                     todoTextController.clear();
                   });
                 },
