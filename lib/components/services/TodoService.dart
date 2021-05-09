@@ -8,7 +8,7 @@ import 'package:to_do/models/Todo.dart';
 
 class TodoService {
 
-  static final String API_URL = "10.0.2.2:3000";
+  static final String API_URL = "radiant-spire-08360.herokuapp.com";
 
   static List<Todo> todoItems = [];
 
@@ -51,16 +51,16 @@ class TodoService {
     }
   }
 
-  static void fetchTodos() async {
+  static Future<List<Todo>> fetchTodos() async {
     final response = await http.get(Uri.http(API_URL, ''));
 
     if(response.statusCode == 200){
       log("Fetched todos from server");
-      TodoService.todoItems = todoFromJson(response.body);
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load todos');
+      return todoFromJson(response.body);
     }
+
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load todos');
   }
 }

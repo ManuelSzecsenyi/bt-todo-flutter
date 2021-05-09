@@ -16,28 +16,19 @@ class TodoList extends StatefulWidget {
 class _TodoListState extends State<TodoList> {
 
   List<Todo> todoList = [];
-  Timer timer = Timer.periodic(Duration(seconds: 1), (Timer t) => { });
 
   @override
   void initState() {
     super.initState();
-    TodoService.fetchTodos();
-    todoList = TodoService.todoItems;
-    timer = Timer.periodic(Duration(seconds: 4), (Timer t) => checkForNewTodos());
+    checkForNewTodos();
+    log("init");
   }
 
   void checkForNewTodos() {
     setState(() {
-      TodoService.fetchTodos();
+      TodoService.fetchTodos().then((value) => this.todoList = value);
       todoList = TodoService.todoItems;
-      log("new items fetched");
     });
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
   }
 
   @override
@@ -53,7 +44,6 @@ class _TodoListState extends State<TodoList> {
                 setState(() {
                   todoList[index].done = !todoList[index].done;
                   TodoService.toggleTodo(todoList[index]);
-                  TodoService.fetchTodos();
                 });
               },
               child: TodoItem(todoList[index]),
